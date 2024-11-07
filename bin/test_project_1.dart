@@ -3,6 +3,22 @@ import 'dart:io';
 import 'models/todos.dart';
 
 void main() async {
+  const List<String> listOfMessages = [
+    'Add a new task',
+    'View all tasks',
+    'Mark a task as completed',
+    'Update task title',
+    'Exit',
+  ];
+
+  void printInitMessagesMap() {
+    print('Please select an option');
+    for (int i = 0; i < listOfMessages.length; ++i) {
+      String msg = listOfMessages[i];
+      print('${i + 1}. $msg');
+    }
+  }
+
   Todos todos = Todos();
 
   print('Welcome in Todos App!');
@@ -10,13 +26,8 @@ void main() async {
   bool isWorking = true;
 
   while (isWorking) {
-    print('Please select an option');
-    print('1. Add a new task');
-    print('2. View all tasks');
-    print('3. Mark a task as completed');
-    print('4. Update task title');
-    print('5. Exit');
-    stdout.write('Enter your option (1 -4):');
+    printInitMessagesMap();
+    stdout.write('Enter your option (1 -${listOfMessages.length}):');
 
     String? option = stdin.readLineSync();
     print('');
@@ -35,8 +46,8 @@ void main() async {
         break;
       case '3':
         stdout.write('Enter a task ID: ');
-        String? taskIdString = stdin.readLineSync();
-        int taskId = int.tryParse(taskIdString ?? '') ?? 0;
+        String taskIdString = stdin.readLineSync() ?? '';
+        int taskId = int.tryParse(taskIdString) ?? 0;
         if (taskId != 0) {
           todos.markTaskAsCompleted(taskId);
         }
